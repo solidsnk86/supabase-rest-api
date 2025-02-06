@@ -2,7 +2,7 @@ const express = require('express')
 const { rateLimit } = require('express-rate-limit')
 require('dotenv').config()
 const { createDataRouter } = require('./routes/data')
-const corsMiddleware = require('../middlewares/cors.js')
+const corsMiddleware = require('../middleware/cors.js')
 
 const createApp = () => {
   const app = express()
