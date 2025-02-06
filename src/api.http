@@ -1,2 +1,0 @@
-# Obtener tabla
-GET http://localhost:3639/supabase?from=commnets&select=*

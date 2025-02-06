@@ -31,7 +31,9 @@ class SupabaseController {
   getOptionalTable = async (req, res) => {
     const queryValidation = validateQuery(req.query)
     if (!queryValidation.success) {
-      const errorMessages = queryValidation.error.errors.map((err) => err.message)
+      const errorMessages = queryValidation.error.errors.map(
+        (err) => err.message
+      )
       return res.status(400).json({ message: errorMessages.join(', ') })
     }
 
@@ -39,8 +41,13 @@ class SupabaseController {
 
     try {
       if (!tableName) throw new Error('El nombre de la tabla es requerido')
-      
-      const { data, error } = await this.model.getOptional(tableName, select, limit, order)
+
+      const { data, error } = await this.model.getOptional(
+        tableName,
+        select,
+        limit,
+        order
+      )
       if (error) throw error
 
       res.status(200).json(data)
@@ -52,17 +59,24 @@ class SupabaseController {
   searchData = async (req, res) => {
     const queryValidation = validateQuery(req.query)
     if (!queryValidation.success) {
-      const errorMessages = queryValidation.error.errors.map((err) => err.message)
+      const errorMessages = queryValidation.error.errors.map(
+        (err) => err.message
+      )
       return res.status.json({ message: errorMessages.join(', ') })
     }
     const { from: tableName, select, column, eq } = queryValidation.data
 
     try {
-      const { data, error } = await this.model.search(tableName, select, column, eq)
+      const { data, error } = await this.model.search(
+        tableName,
+        select,
+        column,
+        eq
+      )
       if (error) throw error
-
+      if (data.length === 0) res.status(400).json({ message: 'No hubo coincidencias' })
       res.status(200).json(data)
-    }catch (error) {
+    } catch (error) {
       res.status(500).json({ message: 'Error ' + error.message })
     }
   }
