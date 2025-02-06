@@ -82,7 +82,7 @@ La aplicación se ejecutará en http://localhost:3639 (o el puerto definido en t
 - **GET** `/supabase/optional?from=<tableName>&select=<fields>&order=<column>&limit=<number>`
   Recupera datos opcionales de la tabla especificada.
 
-- **GET** `/supabase/optional?from=<tableName>&select=<fields>&column=<fields>&eq=<value>`
+- **GET** `/supabase/search?from=<tableName>&select=<fields>&column=<fields>&eq=<value>`
   Búsqueda de datos de la tabla y columna especificados.
 
 - **POST** `/supabase?from=<tableName>`
