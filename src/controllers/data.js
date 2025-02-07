@@ -131,27 +131,28 @@ class SupabaseController {
   }
 
   delete = async (req, res) => {
-    const queryValidation = validateQuery(req.query)
-    if (!queryValidation.success) {
-      const errorMessages = queryValidation.error.errors.map(
-        (err) => err.message
-      )
-      return res.status(400).json({ message: errorMessages.join(', ') })
+  const queryValidation = validateQuery(req.query);
+  if (!queryValidation.success) {
+    const errorMessages = queryValidation.error.errors.map(err => err.message);
+    return res.status(400).json({ message: errorMessages.join(', ') });
+  }
+
+  const { tableName, id } = req.params;
+
+  try {
+    if (!tableName) {
+      throw new Error('El nombre de la tabla es requerido');
     }
 
-    const { from: tableName } = queryValidation.data
-    const { id } = req.params
-
-    try {
-      if (!tableName) throw new Error('El nombre de la tabla es requerido')
-
-      const { error } = await this.model.delete(tableName, id)
-      if (error) throw error
-
-      res.status(200).json({ message: 'Data deleted' })
-    } catch (error) {
-      res.status(400).json({ message: 'Error: ' + error.message })
+    const { error } = await this.model.delete(tableName, id);
+    if (error) {
+      throw error;
     }
+
+    res.status(200).json({ message: 'Data deleted' });
+  } catch (error) {
+    res.status(400).json({ message: 'Error: ' + error.message });
+  }
   }
 }
 

@@ -12,7 +12,7 @@ const createDataRouter = () => {
   dataRouter.get('/search', controller.searchData)
   dataRouter.post('/', controller.sendData);
   dataRouter.patch('/:id', controller.update);
-  dataRouter.delete('/:id', controller.delete);
+  dataRouter.delete('/:from/:id', controller.delete);
 
   return dataRouter;
 };
