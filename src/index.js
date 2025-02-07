@@ -12,7 +12,7 @@ const createApp = () => {
   app.use(corsMiddleware())
 
   const rateLimiter = rateLimit({
-    limit: 300,
+    limit: 5000,
     windowMs: 60 * 60 * 1000,
     message: 'Too many requests',
   })
