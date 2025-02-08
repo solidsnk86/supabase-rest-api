@@ -137,7 +137,7 @@ class SupabaseController {
     return res.status(400).json({ message: errorMessages.join(', ') });
   }
 
-  const { tableName, id } = req.params;
+  const { from: tableName, id } = queryValidation.data;
 
   try {
     if (!tableName) {
