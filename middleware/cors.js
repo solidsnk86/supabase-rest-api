@@ -4,6 +4,7 @@ const ACCEPTED_ORIGINS = [
   'https://calcagni-gabriel.vercel.app',
   'https://neo-wifi.vercel.app',
   'https://double-commit.vercel.app',
+  'http://localhost:3001/'
 ]
 
 const corsMiddleware = ({ aceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
