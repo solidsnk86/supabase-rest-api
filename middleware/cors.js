@@ -13,7 +13,7 @@ const corsMiddleware = ({ aceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
         return callback(null, true)
       }
 
-      return callback(new Error('Not allowed by CORS'))
+      return callback(new Error('Not allowed by CORS: 🐶'))
     },
   })
 }
