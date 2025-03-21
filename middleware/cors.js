@@ -6,10 +6,13 @@ const ACCEPTED_ORIGINS = [
   'https://double-commit.vercel.app',
 ]
 
-const corsMiddleware = ({ aceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
+const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
  return cors({
     origin: (origin, callback) => {
-      if (aceptedOrigins.includes(origin)) {
+      if (acceptedOrigins.includes(origin)) {
+        return callback(null, true)
+      }
+      if (!acceptedOrigins.includes(origin)) {
         return callback(null, true)
       }
 
