@@ -1,3 +1,4 @@
+const { SupabaseModel } = require('../models/SupabaseModel')
 const validateQuery = require('../schemas/data')
 
 class SupabaseController {
@@ -62,19 +63,21 @@ class SupabaseController {
       const errorMessages = queryValidation.error.errors.map(
         (err) => err.message
       )
-      return res.status.json({ message: errorMessages.join(', ') })
+      return res.status(200).json({ message: errorMessages.join(', ') })
     }
-    const { from: tableName, select, column, eq } = queryValidation.data
+    const { from: tableName, select, column, eq, order } = queryValidation.data
 
     try {
       const { data, error } = await this.model.search(
         tableName,
         select,
         column,
-        eq
+        eq,
+        order
       )
       if (error) throw error
-      if (data.length === 0) res.status(400).json({ message: 'No hubo coincidencias' })
+      if (data.length === 0)
+        res.status(400).json({ message: 'No hubo coincidencias' })
       res.status(200).json(data)
     } catch (error) {
       res.status(500).json({ message: 'Error ' + error.message })
@@ -101,7 +104,7 @@ class SupabaseController {
 
       res.status(201).json({ message: 'Data inserted' })
     } catch (error) {
-      res.status(400).json({ message: 'Error: ' + error.message })
+      res.status(500).json({ message: 'Error: ' + error.message })
     }
   }
 
@@ -131,28 +134,30 @@ class SupabaseController {
   }
 
   delete = async (req, res) => {
-  const queryValidation = validateQuery(req.query);
-  if (!queryValidation.success) {
-    const errorMessages = queryValidation.error.errors.map(err => err.message);
-    return res.status(400).json({ message: errorMessages.join(', ') });
-  }
-
-  const { from: tableName, id } = queryValidation.data;
-
-  try {
-    if (!tableName) {
-      throw new Error('El nombre de la tabla es requerido');
+    const queryValidation = validateQuery(req.query)
+    if (!queryValidation.success) {
+      const errorMessages = queryValidation.error.errors.map(
+        (err) => err.message
+      )
+      return res.status(400).json({ message: errorMessages.join(', ') })
     }
 
-    const { error } = await this.model.delete(tableName, id);
-    if (error) {
-      throw error;
-    }
+    const { from: tableName, id } = queryValidation.data
 
-    res.status(200).json({ message: 'Data deleted' });
-  } catch (error) {
-    res.status(400).json({ message: 'Error: ' + error.message });
-  }
+    try {
+      if (!tableName) {
+        throw new Error('El nombre de la tabla es requerido')
+      }
+
+      const { error } = await this.model.delete(tableName, id)
+      if (error) {
+        throw error
+      }
+
+      res.status(200).json({ message: 'Data deleted' })
+    } catch (error) {
+      res.status(400).json({ message: 'Error: ' + error.message })
+    }
   }
 }
 

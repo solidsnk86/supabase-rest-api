@@ -15,11 +15,12 @@ class SupabaseModel {
     return { data, error }
   }
 
-  search = async (tableName, select, column, value) => {
+  search = async (tableName, select, column, value, order) => {
     const { data, error } = await supabase
       .from(tableName)
       .select(select)
       .eq(column, value)
+      .order(order, { ascending: false })
     return { data, error }
   }
 
