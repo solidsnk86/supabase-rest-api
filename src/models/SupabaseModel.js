@@ -34,6 +34,7 @@ class SupabaseModel {
       .from(tableName)
       .update(updates)
       .match({ id })
+      .select()
     return { data, error }
   }
 
