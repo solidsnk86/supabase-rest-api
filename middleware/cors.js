@@ -3,7 +3,8 @@ const cors = require('cors')
 const ACCEPTED_ORIGINS = [
   'https://calcagni-gabriel.vercel.app',
   'https://neo-wifi.vercel.app',
-  'https://double-commit.vercel.app',
+  'https://how-do-you-feel.vercel.app',
+  'http://localhost:3000/'
 ]
 
 const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) => {
